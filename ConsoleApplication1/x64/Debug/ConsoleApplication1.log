@@ -1,3 +1,5 @@
-﻿  ConsoleApplication1.cpp
-  LINK : E:\Repos\AudioProject\x64\Debug\ConsoleApplication1.exe not found or not built by the last incremental link; performing full link
+﻿  waveFormat.c
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(236,17): warning C4013: 'malloc' undefined; assuming extern returning int
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(244,3): warning C4013: 'free' undefined; assuming extern returning int
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(236,8): warning C4047: 'initializing': 'void *' differs in levels of indirection from 'int'
   ConsoleApplication1.vcxproj -> E:\Repos\AudioProject\x64\Debug\ConsoleApplication1.exe
