@@ -132,9 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="audioFormat.c" />
-    <ClCompile Include="ConsoleApplication1.cpp" />
     <ClCompile Include="ui.c" />
-    <ClCompile Include="wav.cpp" />
     <ClCompile Include="waveFormat.c" />
   </ItemGroup>
   <ItemGroup>
