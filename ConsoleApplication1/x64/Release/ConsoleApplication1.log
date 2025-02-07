@@ -1,0 +1,23 @@
+﻿  audioFormat.c
+  waveFormat.c
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(87,3): warning C4033: 'readWaveFile' must return a value
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(93,3): warning C4033: 'readWaveFile' must return a value
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(96,22): warning C4013: 'malloc' undefined; assuming extern returning int
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(96,15): warning C4312: 'type cast': conversion from 'int' to 'WAVE *' of greater size
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(100,3): warning C4033: 'readWaveFile' must return a value
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(116,3): warning C4033: 'readWaveFile' must return a value
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(128,3): warning C4033: 'readWaveFile' must return a value
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(136,3): warning C4033: 'readWaveFile' must return a value
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(144,3): warning C4033: 'readWaveFile' must return a value
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(153,3): warning C4033: 'readWaveFile' must return a value
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(162,3): warning C4033: 'readWaveFile' must return a value
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(171,3): warning C4033: 'readWaveFile' must return a value
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(179,3): warning C4033: 'readWaveFile' must return a value
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(187,3): warning C4033: 'readWaveFile' must return a value
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(201,3): warning C4033: 'readWaveFile' must return a value
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(211,3): warning C4033: 'readWaveFile' must return a value
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(218,3): warning C4033: 'readWaveFile' must return a value
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(223,13): warning C4047: '=': 'uint8_t *' differs in levels of indirection from 'int'
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(83,9): error C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(241,3): warning C4013: 'free' undefined; assuming extern returning int
+E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(233,8): warning C4047: 'initializing': 'void *' differs in levels of indirection from 'int'

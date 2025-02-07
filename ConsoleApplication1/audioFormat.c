@@ -1,29 +1,19 @@
-
 #include "waveFormat.h"
+#include <crtdbg.h>
 #include <stdio.h>
-
+#include "ui.h"
 int main() {
-    //PaError err = Pa_Initialize();
-    //if (err != paNoError) {
-    //    std::cerr << "PortAudio error: " << Pa_GetErrorText(err) << std::endl;
-    //    return 1;
-    //}
 
-    //std::cout << "PortAudio initialized successfully!" << std::endl;
-
-    //Pa_Terminate();
-    // 
-    char filename[] = "feel_good.wav"; // Allocate 15 bytes (including '\0')
-    //if (!filename) {
-    //    perror("Memory allocation failed");
-    //    return 1;
-    //}
-    //strcpy(filename, "feel_good.wav"); // Safe copy
+    char filename[] = "feel_good.wav"; 
+    char filename2[] = "Alesis-Fusion-Clean-Guitar-C3.wav";
+    char filename3[] = "Yamaha-TG100-Ocarina-C5.wav";
 
 
-    readWaveFile(filename);
-
-    //free(filename);
+    //get_file_name();
+    //playWaveFileByName(filename3);
+    ui_start();
+    //_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
+    _CrtDumpMemoryLeaks();
 
     return 0;
 }

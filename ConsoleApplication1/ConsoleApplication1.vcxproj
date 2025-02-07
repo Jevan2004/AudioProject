@@ -24,6 +24,7 @@
     <ProjectGuid>{76ead1d5-9570-4e47-8b40-182a4ddd9670}</ProjectGuid>
     <RootNamespace>ConsoleApplication1</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>SmallAudioProject</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -132,10 +133,12 @@
   <ItemGroup>
     <ClCompile Include="audioFormat.c" />
     <ClCompile Include="ConsoleApplication1.cpp" />
+    <ClCompile Include="ui.c" />
     <ClCompile Include="wav.cpp" />
     <ClCompile Include="waveFormat.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ui.h" />
     <ClInclude Include="wav.h" />
     <ClInclude Include="waveFormat.h" />
   </ItemGroup>

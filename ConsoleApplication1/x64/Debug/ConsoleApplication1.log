@@ -1,5 +1,4 @@
-﻿  waveFormat.c
-E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(236,17): warning C4013: 'malloc' undefined; assuming extern returning int
-E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(244,3): warning C4013: 'free' undefined; assuming extern returning int
-E:\Repos\AudioProject\ConsoleApplication1\waveFormat.c(236,8): warning C4047: 'initializing': 'void *' differs in levels of indirection from 'int'
-  ConsoleApplication1.vcxproj -> E:\Repos\AudioProject\x64\Debug\ConsoleApplication1.exe
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (ConsoleApplication1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  ui.c
+E:\Repos\AudioProject\ConsoleApplication1\ui.c(23,6): warning C4013: 'check_if_file_exists' undefined; assuming extern returning int
+  ConsoleApplication1.vcxproj -> E:\Repos\AudioProject\x64\Debug\SmallAudioProject.exe
