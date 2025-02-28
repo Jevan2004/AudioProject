@@ -42,7 +42,8 @@ int main() {
 
     // Clean up
    // taglib_file_free(file);
-   // 
+    //ui_start();
+
     play_mp3_file(filename);
     //get_file_name();
     //playWaveFileByName(filename3);

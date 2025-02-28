@@ -286,9 +286,7 @@ void playWaveFile(WAVE* wave) {
 	//start the stream
 	Pa_StartStream(stream);
 	//while the stream is active, sleep so it can have time playing to sound
-	while (Pa_IsStreamActive(stream)) {
-		Pa_Sleep(1000);
-	}
+
 	//stop and close the stream
 	Pa_StopStream(stream);
 	Pa_CloseStream(stream);
