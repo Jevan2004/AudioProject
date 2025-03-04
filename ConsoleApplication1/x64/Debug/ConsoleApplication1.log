@@ -1,3 +1,7 @@
 ﻿D:\Visual Studio related\IDE\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (ConsoleApplication1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  audioFormat.c
   mp3format.c
+  Generating Code...
+D:\AudioProject\AudioProject\ConsoleApplication1\mp3format.c(103,20): warning C4018: '<': signed/unsigned mismatch
+D:\AudioProject\AudioProject\ConsoleApplication1\mp3format.c(116,1): warning C4715: 'play': not all control paths return a value
   ConsoleApplication1.vcxproj -> D:\AudioProject\AudioProject\x64\Debug\SmallAudioProject.exe

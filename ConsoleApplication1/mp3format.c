@@ -31,102 +31,86 @@ static int audioCallBack1(const void* inputBuffer, void* outputBuffer,
 	else
 		return paComplete;
 }
-
+// checks if a file is of format mp3
+// returns:
+// 0 on success
+// <0 on failure
+// -1 error on finding the format
+// -2 file is not of mp3 format
+int check_if_mp3(const char* filename) {
+	//AVFormatContext is a structure which holds information about the file, handles input/output formats and streams,
+	//also hold info about metadata
+	AVFormatContext* format_contex = NULL;
+	//opens a stream for the input file, ( usully will get also the header data,not for the audio data, but because mp3 is MPEG
+	//it does not have a header, but frames which need to be decoded
+	int ret = avformat_open_input(&format_contex, filename, NULL, NULL);
+	//with av_strerror we get the error from the error codes of the ffmpeg functions
+	if (ret < 0) {
+		char errorbf[130];
+		av_strerror(ret, errorbf, sizeof(errorbf));
+		fprintf(stderr, "%s", errorbf);
+		return -1;
+	}
+	//read packets of media to get some metadata
+	ret = avformat_find_stream_info(format_contex, NULL);
+	if (ret < 0) {
+		char errorbf[130];
+		av_strerror(ret, errorbf, sizeof(errorbf));
+		fprintf(stderr, "%s", errorbf);
+		avformat_close_input(&format_contex);
+		return -1;
+	}
+	//check if the file format is of type mp3
+	if (strcmp(format_contex->iformat->name, "mp3") != 0) {
+		fprintf(stderr,"The input file is not of type mp3");
+		avformat_close_input(&format_contex);
+		return -2;
+	}
+	
+	avformat_close_input(&format_contex);
+	return 0;
+}
 
 void play_mp3_file(char* filename) {
 
-	//open mp3 file
-	FILE* file = fopen(filename, "rb");
+	check_if_mp3(filename);
+}
 
-	if (file == NULL) {
-		perror("Error on opening file");
-		return;
+int play(const char* filename) {
+	AVFormatContext* format_context = NULL;
+
+	int ret = avformat_open_input(&format_context, filename, NULL, NULL);
+
+	if (ret < 0) {
+		char errorbuf[130];
+		av_strerror(ret, errorbuf, sizeof(errorbuf));
+		fprintf(stderr, "%s", errorbuf);
+		return -1;
 	}
-	//determine file size in bytes
-	fseek(file, 0, SEEK_END);
-	long size;
-	size = ftell(file);
-	//move cursor at beggining of the file
-	rewind(file);
-	//buffer for the mp3 file
-	unsigned char* input_buffer = (unsigned char*)malloc(size);
 
-	if (!input_buffer) {
-		perror("Error on allocating memory");
-		fclose(file);
-		return;
+	ret = avformat_find_stream_info(format_context, NULL);
+
+	if (ret < 0) {
+		char errorbuf[130];
+		av_strerror(ret, errorbuf, sizeof(errorbuf));
+		fprintf(stderr, "%s", errorbuf);
+		return -1;
 	}
-	//read the mp3 file into the buffer
-	fread(input_buffer, 1, size, file);
-	fclose(file);
-	//initialize the mp3 decoder
-	static mp3dec_t mp3d;
-	mp3dec_init(&mp3d);
 
-	short* all_pcm_data = (short*)malloc(1024 * sizeof(short));
-	if (all_pcm_data == NULL) {
-		perror("Error on allocating memory");
-		fclose(file);
-		return;
-	}
-	int pcm_data_size = 0;
-	int buffer_size = 1024;
-
-	mp3dec_frame_info_t info;
-	short pcm[MINIMP3_MAX_SAMPLES_PER_FRAME];
-	int samples = 0;
-	// how much we proccessed of the file
-	int offset = 0;
-	//decode mp3 frame by frame
-	while (offset < size) {
-		samples = mp3dec_decode_frame(&mp3d, input_buffer + offset, size - offset, pcm, &info);
-		printf("Channels %d, hertz %d, bitrate %d\n", info.channels, info.hz, samples);
-		for (int i = 0; i < samples; i++) {
-			if (pcm_data_size >= buffer_size) {
-				buffer_size *= 2;
-				short* reallocation;
-				reallocation = (short*)realloc(all_pcm_data, buffer_size * sizeof(short));
-				if (all_pcm_data == NULL) {
-					perror("eror on reallocating memory");
-					fclose(file);
-					return;
-				}
-				all_pcm_data = reallocation;
-			}
-			all_pcm_data[pcm_data_size] = pcm[i];
-			pcm_data_size++;
+	int streamIndex = -1;
+	//a file can have multiple streams(for MPEG mp3 usually will be only one, 
+	// so we will take the first one which is of type audio)
+	for (int i = 0; i < format_context->nb_streams; i++) {
+		if (format_context->streams[i]->codecpar->codec_type != AVMEDIA_TYPE_AUDIO) {
+			streamIndex = i;
+			break;
 		}
-
-
-		offset += info.frame_bytes;
 	}
 
-	mp3Data* mp3 = (mp3Data*)malloc(sizeof(mp3Data));
-
-	if (mp3 == NULL) {
-		perror("error on allocating memory");
-		return;
+	if (streamIndex == -1) {
+		fprintf(stderr, "None of the available streams are of type AUDIO\n");
+		avformat_close_input(&format_context);
+		return -1;
 	}
 
-	mp3->pcm_data = all_pcm_data;
-	mp3->data_size = pcm_data_size;
-	mp3->info = &info;
-
-	Pa_Initialize();
-	PaStream* stream;
-
-	Pa_OpenDefaultStream(&stream, 0, info.channels, paInt16, info.hz, paFramesPerBufferUnspecified, audioCallBack1, mp3);
-
-	Pa_StartStream(stream);
-
-	while (Pa_IsStreamActive(stream)) {
-		Pa_Sleep(1000);
-	}
-
-	Pa_StopStream(stream);
-	Pa_CloseStream(stream);
-	Pa_Terminate();
-
-	free(all_pcm_data);
-	free(mp3);
 }

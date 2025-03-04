@@ -70,7 +70,7 @@ void ui_start() {
 		else
 			if (strcmp(option, "2") == 0) {
 
-				exit(0);
+				break;
 			}
 			else {
 				printf("Wrong option\n");

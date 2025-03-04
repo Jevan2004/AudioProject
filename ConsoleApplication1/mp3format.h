@@ -2,7 +2,8 @@
 #include <stdio.h>
 #include "minimp3.h"
 #include <portaudio.h>
-
+#include <libavformat/avformat.h>
+#include <libavcodec/avcodec.h>
 typedef struct {
 	short* pcm_data;
 	int data_size;

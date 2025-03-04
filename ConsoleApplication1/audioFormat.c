@@ -1,16 +1,17 @@
+#define _CRTDBG_MAP_ALLOC
 #include "waveFormat.h"
 #include <crtdbg.h>
 #include <stdio.h>
 #include "ui.h"
 #include <taglib/tag_c.h>
 #include "mp3format.h"
-
 int main() {
-
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+    _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
     char filename1[] = "feel_good.wav"; 
     char filename2[] = "Alesis-Fusion-Clean-Guitar-C3.wav";
     char filename3[] = "Yamaha-TG100-Ocarina-C5.wav";
-    char filename[] = "Inchisoarea Alba.mp3";
+    char filename[] = "InchisoareaAlba.mp3";
 
     //// Open the file
     //TagLib_File* file = taglib_file_new(filename);
@@ -42,14 +43,18 @@ int main() {
 
     // Clean up
    // taglib_file_free(file);
-    //ui_start();
+    ui_start();
 
-    play_mp3_file(filename);
+   play_mp3_file(filename1);
     //get_file_name();
     //playWaveFileByName(filename3);
     //ui_start();
-    //_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-    //_CrtDumpMemoryLeaks();
+
+    _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
+    _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
+    _CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
+    _CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_DEBUG);
+    _CrtDumpMemoryLeaks();
 
     return 0;
 }

@@ -72,8 +72,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>D:\portaudio-master\portaudio-master\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\portaudio-master\portaudio-master\msvc\x64\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\ffmpeg\ffmpeg-7.1-full_build-shared\include;D:\portaudio-master\portaudio-master\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\ffmpeg\ffmpeg-7.1-full_build-shared\lib;D:\portaudio-master\portaudio-master\msvc\x64\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -110,11 +110,14 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>D:\AudioProject\taglib-2.0.2\pkg\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard_C>Default</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>portaudio_x64.lib;tag_c.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>portaudio_x64.lib;tag_c.lib;avformat.lib;
+avcodec.lib;
+avutil.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>D:\AudioProject\taglib-2.0.2\pkg\lib;E:\portaudio-master\portaudio-master\bindings\cpp\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>

@@ -31,7 +31,7 @@ int readRiffFile(FILE* file) {
 	}
 
 	printf("Chunk ID: %4.4s\n", (char*)&ck.ckID);
-	
+
 	// ckSize is the size of the file in bytes(-8 bytes) it does not include the fields ckSize and ckId
 	if (fread(&ck.ckSize, 1, sizeof(CKSIZE), file) != 4) {
 		perror("Error on reading chunk size");
@@ -85,13 +85,13 @@ WAVE* readWaveFile(char* filename) {
 
 	if (file == NULL) {
 		perror("Error on opening file");
-		return ;
+		return;
 	}
 	//check if it is a riff file
 	int result = readRiffFile(file);
 	if (result == -1) {
 		perror("Error on reading riff file header");
-		return ;
+		return;
 	}
 
 	WAVE* wave = (WAVE*)malloc(sizeof(WAVE));;
@@ -100,7 +100,7 @@ WAVE* readWaveFile(char* filename) {
 		perror("Eror on alocating memory");
 		return;
 	}
-	
+
 	DWORD subchunk1ID;
 	DWORD subchunk1Size;
 	WORD audioFormat;
@@ -114,7 +114,7 @@ WAVE* readWaveFile(char* filename) {
 	if (fread(&subchunk1ID, 1, sizeof(DWORD), file) != 4) {
 		perror("Error on reading SubChunk1Id");
 		fclose(file);
-		return ;
+		return;
 	}
 
 	//the letters are stored in a double word, transform them into chars
@@ -136,7 +136,7 @@ WAVE* readWaveFile(char* filename) {
 		fclose(file);
 		return NULL;
 	}
-	
+
 	printf("Subchunk1 size is: %lu\n", subchunk1Size);
 	//read the audio format
 	if (fread(&audioFormat, sizeof(WORD), 1, file) != 1) {
@@ -286,7 +286,9 @@ void playWaveFile(WAVE* wave) {
 	//start the stream
 	Pa_StartStream(stream);
 	//while the stream is active, sleep so it can have time playing to sound
-
+	while (Pa_IsStreamActive(stream)) {
+		Pa_Sleep(1000);
+	}
 	//stop and close the stream
 	Pa_StopStream(stream);
 	Pa_CloseStream(stream);
