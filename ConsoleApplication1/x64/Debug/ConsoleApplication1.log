@@ -2,6 +2,15 @@
   audioFormat.c
   mp3format.c
   Generating Code...
-D:\AudioProject\AudioProject\ConsoleApplication1\mp3format.c(103,20): warning C4018: '<': signed/unsigned mismatch
-D:\AudioProject\AudioProject\ConsoleApplication1\mp3format.c(116,1): warning C4715: 'play': not all control paths return a value
+D:\AudioProject\AudioProject\ConsoleApplication1\audioFormat.c(12,5): warning C4013: 'ui_start' undefined; assuming extern returning int
+D:\AudioProject\AudioProject\ConsoleApplication1\mp3format.c(77,2): warning C4013: 'play' undefined; assuming extern returning int
+D:\AudioProject\AudioProject\ConsoleApplication1\mp3format.c(105,20): warning C4018: '<': signed/unsigned mismatch
+D:\AudioProject\AudioProject\ConsoleApplication1\mp3format.c(136,24): warning C4047: 'function': 'AVCodecContext **' differs in levels of indirection from 'AVCodecContext *'
+D:\AudioProject\AudioProject\ConsoleApplication1\mp3format.c(136,24): warning C4024: 'avcodec_free_context': different types for formal and actual parameter 1
+D:\AudioProject\AudioProject\ConsoleApplication1\mp3format.c(143,24): warning C4047: 'function': 'AVCodecContext **' differs in levels of indirection from 'AVCodecContext *'
+D:\AudioProject\AudioProject\ConsoleApplication1\mp3format.c(143,24): warning C4024: 'avcodec_free_context': different types for formal and actual parameter 1
+D:\AudioProject\AudioProject\ConsoleApplication1\mp3format.c(155,24): warning C4047: 'function': 'AVCodecContext **' differs in levels of indirection from 'AVCodecContext *'
+D:\AudioProject\AudioProject\ConsoleApplication1\mp3format.c(155,24): warning C4024: 'avcodec_free_context': different types for formal and actual parameter 1
+D:\AudioProject\AudioProject\ConsoleApplication1\mp3format.c(122,11): warning C4090: 'initializing': different 'const' qualifiers
+D:\AudioProject\AudioProject\ConsoleApplication1\mp3format.c(203,1): warning C4715: 'play': not all control paths return a value
   ConsoleApplication1.vcxproj -> D:\AudioProject\AudioProject\x64\Debug\SmallAudioProject.exe

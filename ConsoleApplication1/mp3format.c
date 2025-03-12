@@ -74,6 +74,7 @@ int check_if_mp3(const char* filename) {
 void play_mp3_file(char* filename) {
 
 	check_if_mp3(filename);
+	play(filename);
 }
 
 int play(const char* filename) {
@@ -94,6 +95,7 @@ int play(const char* filename) {
 		char errorbuf[130];
 		av_strerror(ret, errorbuf, sizeof(errorbuf));
 		fprintf(stderr, "%s", errorbuf);
+		avformat_close_input(&format_context);
 		return -1;
 	}
 
@@ -101,7 +103,7 @@ int play(const char* filename) {
 	//a file can have multiple streams(for MPEG mp3 usually will be only one, 
 	// so we will take the first one which is of type audio)
 	for (int i = 0; i < format_context->nb_streams; i++) {
-		if (format_context->streams[i]->codecpar->codec_type != AVMEDIA_TYPE_AUDIO) {
+		if (format_context->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_AUDIO) {
 			streamIndex = i;
 			break;
 		}
@@ -112,5 +114,90 @@ int play(const char* filename) {
 		avformat_close_input(&format_context);
 		return -1;
 	}
+	// AVCodecParameters describes properties about the encoded stream
+	AVCodecParameters* codec_param = format_context->streams[streamIndex]->codecpar;
+
+	int codec_id = codec_param->codec_id;
+	//find the corresponding decoder for our stream
+	AVCodec* found_codec = avcodec_find_decoder(codec_id);
+
+	if (found_codec == NULL) {
+		fprintf(stderr, "Codec not found");
+		avformat_close_input(&format_context);
+		return -1;
+	}
+	
+	AVCodecContext* codec_context = avcodec_alloc_context3(found_codec);
+
+	ret = avcodec_parameters_to_context(codec_context, codec_param);
+
+	if (ret < 0) {
+		fprintf(stderr, "Error on transforming codec params to codec context");
+		avcodec_free_context(codec_context);
+		avformat_close_input(&format_context);
+		return -1;
+	}
+
+	if (avcodec_open2(codec_context, found_codec, NULL) < 0) {
+		fprintf(stderr, "Error initiating the error contex");
+		avcodec_free_context(codec_context);
+		avformat_close_input(&format_context);
+		return -1;
+	}
+	//structure that stores compressed data.
+	AVPacket* packet = av_packet_alloc();
+	//structure that describes decoded (raw) audio data.
+	AVFrame* frame = av_frame_alloc();
+
+	FILE* file = fopen("decoded.raw", "w");
+	if (file == NULL) {
+		fprintf(stderr, "Error on opening file to write raw data");
+		avcodec_free_context(codec_context);
+		avformat_close_input(&format_context);
+		return -1;
+	}
+
+	//read frame by frame
+	while (av_read_frame(format_context, packet) == 0) {
+		//send packet to decoder,  will copy relevant AVCodecContext fields,
+		if (packet->stream_index == streamIndex) {
+			if (avcodec_send_packet(codec_context, packet) != 0) {
+				fprintf(stderr, "Error on sending data for the decoder");
+			}
+			int channels = codec_context->ch_layout.nb_channels;
+			int bytes_per_sample = av_get_bits_per_sample(codec_context->sample_fmt);
+			while ((ret = avcodec_receive_frame(codec_context, frame)) >= 0) {
+				if (av_sample_fmt_is_planar(codec_context->sample_fmt)) {
+					// Handle planar audio format
+					int channels = codec_context->ch_layout.nb_channels;
+					int bytes_per_sample = av_get_bytes_per_sample(codec_context->sample_fmt);
+					for (int ch = 0; ch < channels; ch++) {
+						for (int i = 0; i < frame->nb_samples; i++) {
+							fwrite(frame->data[ch] + i * bytes_per_sample, bytes_per_sample, 1, file);
+						}
+					}
+				}
+				else {
+					// Handle packed audio format
+					fwrite(frame->data[0], 1, frame->linesize[0], file);
+				}
+			}
+			if (ret != AVERROR(EAGAIN) && ret != AVERROR_EOF) {
+				fprintf(stderr, "Error decoding audio frame\n");
+				break;
+			}
+		}
+		av_packet_unref(packet);
+	}
+
+	fclose(file);
+	av_packet_free(&packet);
+	av_frame_free(&frame);
+	/*avcodec_*/
+	//avcodec_close(codec_context);
+
+	avcodec_free_context(&codec_context);
+
+	avformat_close_input(&format_context);
 
 }

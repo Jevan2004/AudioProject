@@ -30,6 +30,8 @@
 *.exe
 *.out
 *.app
-
+# Files for testing
+*.pcm
+*.raw
 # Temporary visual studio files
 *.vs/

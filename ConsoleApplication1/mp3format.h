@@ -4,6 +4,8 @@
 #include <portaudio.h>
 #include <libavformat/avformat.h>
 #include <libavcodec/avcodec.h>
+#include <libavutil/avutil.h>
+
 typedef struct {
 	short* pcm_data;
 	int data_size;
